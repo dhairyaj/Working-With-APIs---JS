@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetching text using Fetch API</title>
+</head>
+<body>
+    <p id="poem"></p>
+
+    <script>
+        fetchPoem().catch(error => {
+            console.log("Here is the error");
+            console.error(error);
+        });
+
+        async function fetchPoem(){
+            const respose = await fetch('poem.txt');
+            
+            console.log(respose);
+            const text = await respose.text();
+            console.log('Converted to text');
+            document.getElementById('poem').innerText = text;
+        }
+    </script>
+</body>
+</html>

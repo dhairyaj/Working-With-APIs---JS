@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API</title>
+</head>
+<body>
+    <img src="" id="image" height="400px;" width="400px;">
+
+    <script>
+        console.log("We have to fetch an image using fetch API");
+        fetch('batman.jpg').then(Response =>{
+            console.log("Image fetched");
+            return Response.blob();
+        }).then(blob =>{
+            console.log("Blob obtained");
+            document.getElementById('image').src = URL.createObjectURL(blob);
+        });
+    </script>
+</body>
+</html>
