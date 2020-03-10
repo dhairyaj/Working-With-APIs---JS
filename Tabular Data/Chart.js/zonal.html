@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <title>Tablulate using Chart.js</title>
+</head>
+<body>
+    <canvas id="myChart" width="300px" height="300px"></canvas>
+    <script>
+
+        const temps = [];
+        const years = [];
+
+        makeChart();
+        
+        async function makeChart(){
+
+            tabluate();
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Global Temperture',
+                        data: temps,
+                        fill: false,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        async function tabluate(){
+            const response = await fetch('../zonal.csv');
+            const data = await response.text();
+            //console.log(data);
+            const table = data.split("\n").slice(1);
+            //console.log(rows);
+            table.forEach(row => {
+                const cols = row.split(",");
+                const year = cols[0];
+                years.push(year);
+                const temp = parseFloat(cols[1]) + 14;
+                temps.push(temp);
+                //console.log(year, temp);
+            })
+        }
+    </script>
+</body>
+</html>
